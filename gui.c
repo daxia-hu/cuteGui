@@ -34,9 +34,15 @@ void Gui_Trans(Gui *gui, uint16_t page)
  */
 void Gui_Back(Gui *gui,uint16_t page)
 {
-    gui->nodeList[gui->page]->exit(gui);
+    if(NULL != gui->nodeList[gui->page]->exit)
+    {
+        gui->nodeList[gui->page]->exit(gui);
+    }
     gui->page = page;
-    gui->nodeList[gui->page]->init(gui,INIT_PARAM_RECORD);
+    if(NULL != gui->nodeList[gui->page]->init)
+    {
+        gui->nodeList[gui->page]->init(gui,INIT_PARAM_RECORD);
+    }
 }
 /**
  * @brief 记录界面的历史界面 只有弹窗界面才能记录历史界面，且只能记录一层
